@@ -1,0 +1,30 @@
+{
+  "name": "@jamestomasino/resize-frame",
+  "version": "0.0.0",
+  "description": "Better resize events with requestAnimationFrame",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamestomasino/resize-frame.git"
+  },
+  "keywords": [
+    "requestAnimationFrame",
+    "scroll"
+  ],
+  "author": "James Tomasino",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/jamestomasino/resize-frame/issues"
+  },
+  "homepage": "https://github.com/jamestomasino/resize-frame#readme",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom"
+  }
+}
