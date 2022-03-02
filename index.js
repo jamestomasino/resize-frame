@@ -3,8 +3,8 @@ function resizeFrame() {
   let callbackCollection = []
   let lastDocHeight = -1 // document.documentElement.scrollHeight
   let lastDocWidth = -1 // document.documentElement.scrollWidth
-  let lastDocHeight = -1 // document.documentElement.clientHeight
-  let lastDocWidth = -1 // document.documentElement.clientWidth
+  let lastClientHeight = -1 // document.documentElement.clientHeight
+  let lastClientWidth = -1 // document.documentElement.clientWidth
 
   /**
    * Object that holds a callback function and data about how to handle it
@@ -28,11 +28,11 @@ function resizeFrame() {
       const docWidth = document.documentElement.scrollWidth
       const clientHeight = document.documentElement.clientHeight
       const clientWidth = document.documentElement.clientWidth
-      case (false) {
-        docHeight === lastDocHeight:
-        docWidth === lastDocWidth:
-        clientHeight === lastClientHeight:
-        clientWidth === lastClientWidth:
+      switch (false) {
+        case (docHeight === lastDocHeight):
+        case (docWidth === lastDocWidth):
+        case (clientHeight === lastClientHeight):
+        case (clientWidth === lastClientWidth):
           lastDocHeight = docHeight
           lastDocWidth = docWidth
           lastClientHeight = clientHeight
