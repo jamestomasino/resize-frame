@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "description": "Better resize events with requestAnimationFrame",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": ""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jamestomasino/resize-frame.git"
