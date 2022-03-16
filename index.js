@@ -1,3 +1,4 @@
+// Generates add and remove listeners for resize events
 function resizeFrame() {
   let animationFrame = window.requestAnimationFrame(loop)
   let callbackCollection = []
