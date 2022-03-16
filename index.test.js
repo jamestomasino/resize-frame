@@ -36,6 +36,15 @@ describe('When addResizeListener adds a callback for content resize', () => {
     expect(mockCallback).toHaveBeenCalledTimes(2)
   })
 
+  it('it should fire on different dimension content resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      scrollHeight: 1000
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(3)
+  })
+
   afterAll(() => {
     removeResizeListener(mockCallback)
     jest.clearAllMocks();
@@ -70,6 +79,15 @@ describe('When addResizeListener adds a callback for client resize', () => {
     }))
     await waitRAF();
     expect(mockCallback).toHaveBeenCalledTimes(2)
+  })
+
+  it('it should fire on different dimension screen resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      clientHeight: 1000
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(3)
   })
 
   afterAll(() => {
