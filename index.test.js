@@ -6,11 +6,14 @@ const docSpy = jest.spyOn(document, 'documentElement', 'get')
 const { addResizeListener, removeResizeListener } = require('./index');
 const waitRAF = () => new Promise(resolve => requestAnimationFrame(resolve))
 
-describe('When addResizeListener adds a callback', () => {
+describe('When addResizeListener adds a callback for content resize', () => {
   const mockCallback = jest.fn()
-  addResizeListener(mockCallback)
 
-  it('it should fire on resize', async () => {
+  beforeAll(() => {
+    addResizeListener(mockCallback)
+  })
+
+  it('it should fire on content resize', async () => {
     docSpy.mockImplementation(() => ({
       ...originalDocument,
       scrollWidth: 1000
@@ -19,12 +22,12 @@ describe('When addResizeListener adds a callback', () => {
     expect(mockCallback).toHaveBeenCalled()
   })
 
-  it('it shouldn\'t fire twice for a single resize', async () => {
+  it('it shouldn\'t fire twice for a single content resize', async () => {
     await waitRAF();
     expect(mockCallback).toHaveBeenCalledTimes(1)
   })
 
-  it('it should fire on subsequent resize', async () => {
+  it('it should fire on subsequent content resize', async () => {
     docSpy.mockImplementation(() => ({
       ...originalDocument,
       scrollWidth: 500
@@ -32,19 +35,67 @@ describe('When addResizeListener adds a callback', () => {
     await waitRAF();
     expect(mockCallback).toHaveBeenCalledTimes(2)
   })
+
+  afterAll(() => {
+    removeResizeListener(mockCallback)
+    jest.clearAllMocks();
+  })
+})
+
+describe('When addResizeListener adds a callback for client resize', () => {
+  const mockCallback = jest.fn()
+
+  beforeAll(() => {
+    addResizeListener(mockCallback)
+  })
+
+  it('it should fire on screen resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      clientWidth: 1000
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalled()
+  })
+
+  it('it shouldn\'t fire twice for a single screen resize', async () => {
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(1)
+  })
+
+  it('it should fire on subsequent screen resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      clientWidth: 500
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(2)
+  })
+
+  afterAll(() => {
+    removeResizeListener(mockCallback)
+    jest.clearAllMocks();
+  })
 })
 
 describe('When removeResizeListener removes a callback', () => {
   const mockCallback = jest.fn()
-  addResizeListener(mockCallback)
-  removeResizeListener(mockCallback)
+
+  beforeAll(() => {
+    addResizeListener(mockCallback)
+    removeResizeListener(mockCallback)
+  })
 
   it('it shouldn\'t fire on resize', async () => {
     docSpy.mockImplementation(() => ({
       ...originalDocument,
-      pageYOffset: -40
+      clientWidth: 500
     }))
     await waitRAF();
     expect(mockCallback).toHaveBeenCalledTimes(0)
+  })
+
+  afterAll(() => {
+    jest.clearAllMocks();
   })
 })
