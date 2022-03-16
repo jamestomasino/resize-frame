@@ -1,6 +1,6 @@
 {
   "name": "@jamestomasino/resize-frame",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Better resize events with requestAnimationFrame",
   "main": "index.js",
   "scripts": {
