@@ -18,7 +18,7 @@ function resizeFrame() {
   }
 
   /**
-   * Determines if resize has occurred and callbacks exist to initiate a trigger
+   * Determines if any resize has occurred and callbacks exist to initiate a trigger
    */
   function loop () {
     // Only process checks if callback exists
