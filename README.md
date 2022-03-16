@@ -2,8 +2,6 @@
 
 Better resize event management using requestAnimationFrame.
 
-_NOTE: This is in alpha. Tests are not yet working._
-
 ## Overview
 
 `resize-frame` sets up one master requestAnimationFrame loop which processes callbacks only when the document or client window change size. Any deviation in `documentElement` properties: `clientHeight`, `clientWidth`, `scrollHeight`, or `scrollWidth` will trigger the callbacks to fire. When the size changes stop the callbacks also stop firing. Multiple callbacks can be added to this resize listener behavior. Callbacks can also be removed from the listener.
