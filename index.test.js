@@ -1,8 +1,8 @@
 const { JSDOM } = require("jsdom");
 const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
 
-const originalWindow = { ...window }
-const windowSpy = jest.spyOn(global, 'window', 'get')
+const originalDocument = { ...document.documentElement }
+const docSpy = jest.spyOn(document, 'documentElement', 'get')
 const { addResizeListener, removeResizeListener } = require('./index');
 const waitRAF = () => new Promise(resolve => requestAnimationFrame(resolve))
 
@@ -11,9 +11,9 @@ describe('When addResizeListener adds a callback', () => {
   addResizeListener(mockCallback)
 
   it('it should fire on resize', async () => {
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
-      pageYOffset: -40
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      scrollWidth: 1000
     }))
     await waitRAF();
     expect(mockCallback).toHaveBeenCalled()
@@ -25,9 +25,9 @@ describe('When addResizeListener adds a callback', () => {
   })
 
   it('it should fire on subsequent resize', async () => {
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
-      pageYOffset: 0
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      scrollWidth: 500
     }))
     await waitRAF();
     expect(mockCallback).toHaveBeenCalledTimes(2)
@@ -40,8 +40,8 @@ describe('When removeResizeListener removes a callback', () => {
   removeResizeListener(mockCallback)
 
   it('it shouldn\'t fire on resize', async () => {
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
       pageYOffset: -40
     }))
     await waitRAF();
