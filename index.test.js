@@ -117,3 +117,36 @@ describe('When removeResizeListener removes a callback', () => {
     jest.clearAllMocks();
   })
 })
+
+describe('When a callback throws an error with breakOnError', () => {
+  const mockCallback = jest.fn().mockImplementation(() => {
+    throw new Error('Test Error')
+  })
+
+  beforeAll(() => {
+    addResizeListener(mockCallback, true)
+  })
+
+  it('it should not error on screen resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      clientWidth: 1000
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(1)
+  })
+
+  it('it should not be called a second time on screen resize', async () => {
+    docSpy.mockImplementation(() => ({
+      ...originalDocument,
+      clientWidth: 500
+    }))
+    await waitRAF();
+    expect(mockCallback).toHaveBeenCalledTimes(1)
+  })
+
+  afterAll(() => {
+    removeResizeListener(mockCallback)
+    jest.clearAllMocks();
+  })
+})

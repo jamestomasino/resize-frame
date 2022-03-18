@@ -57,9 +57,10 @@ function resizeFrame() {
         callback.func()
       } catch (err) {
         if (callback.breakOnError) {
-          remove(callback.func)
+          removeResizeListener(callback.func)
         } else {
-          throw new Error('ResizeFrame: callback error', { cause: err })
+          // pass through error otherwise
+          throw err
         }
       }
     }
